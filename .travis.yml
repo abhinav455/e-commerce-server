@@ -1,7 +1,7 @@
 sudo: required
 
 services:
-  - docker
+  - docker   #runs $sudo systemctl start docker in job shell
 
 before_install:
   - docker build -t bhattacharjeeabhinav/ecommerceapp:server -f Dockerfile.dev .
@@ -12,13 +12,20 @@ script:
    #exec commands to be done in container
   - docker run bhattacharjeeabhinav/ecommerceapp:server npm run test -- --coverage 
 
+after_sucess:
+  #build production grade dockerfile
+  - docker build -t bhattacharjeeabhinav/ecommerceapp:server .
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin 
+  - docker push bhattacharjeeabhinav/ecommerceapp:server   
+
+
 #deploy to hub
-deploy:
-  provider: script
-  script: bash docker_push
+#deploy:
+#  provider: script
+#  script: bash docker_push
   #docker is a script in repo containenint 
   #!/bin/bash ; echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin ; docker push USER/REPO
-  on:
-    branch: master
+#  on:
+#    branch: master
 
    
