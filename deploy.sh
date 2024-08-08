@@ -6,7 +6,7 @@ echo "Deploying eShop/server to google cloud \n"
 
 #FN Returns a list of all gcloud deployment versions
 gcloud_list() {
-    local gcloud="$(gcloud app versions list)"
+    local gcloud="$(gcloud -q app versions list)"
     local array=()
     for word in $gcloud
     do
@@ -32,7 +32,7 @@ list=$(gcloud_list)
 delete_version $list
 
 #deploy to google cloud provider
-gcloud app deploy --stop-previous-version 
+gcloud -q app deploy --stop-previous-version 
             #deploys using the app.yml file in the current directory like docker-compose.yml, take all current directory files 
             #stop current not fully deployed also
             #it sees the docker-compose file thus runs the env as containers looking at it
