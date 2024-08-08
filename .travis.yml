@@ -33,7 +33,7 @@ after_sucess:
   #can use gcloud commands now
   - gcloud auth activate-service-account --key-file serviceAccount.json  #instead of logging in via oauth our owner account
   - gcloud config set project eshop-431807
-  - gcloud config set compute/zone us-west2-a
+  - gcloud config set compute/zone us-west1-a
 
   #deploy to gcp
    # - gcloud deploy app #deploys the current directory all files
